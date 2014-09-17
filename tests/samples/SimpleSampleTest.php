@@ -1,6 +1,4 @@
 <?php
-require_once __DIR__ . '/bootstrap.php';
-
 use \TrialSeleniumWebdriverTest\Util;
 
 class SimpleSampleTest extends PHPUnit_Framework_TestCase
