@@ -1,4 +1,6 @@
 <?php
+namespace TrialSeleniumWebdriverTest\Oshietegoo;
+
 use \TrialSeleniumWebdriverTest\Util;
 
 class PostQuestionFromQuestionPageTest extends \PHPUnit_Framework_TestCase
@@ -7,41 +9,41 @@ class PostQuestionFromQuestionPageTest extends \PHPUnit_Framework_TestCase
      * @test
      */
     public function 質問ページから質問投稿する() {
-        $basic_user = urlencode('******@****.co.jp');
-        $basic_pass = urlencode('*******');
-        $gooid_user = '*******';
-        $gooid_pass = '*******';
-        $domain = '*****.goo.ne.jp';
+//        $basic_user = '*******';
+//        $basic_pass = '*******';
+//        $gooid_user = '*******';
+//        $gooid_pass = '*******';
+//        $domain = '*****.goo.ne.jp';
+        require(__DIR__ . '/../config.php');
+
+        $basic_user = urlencode($basic_user);
+        $basic_pass = urlencode($basic_pass);
 
         $title = 'タイトル' . time();
         $description = '本文' . time();
 
         $driver = Util::createDriver();
 
-        $driver->get('https://login.mail.goo.ne.jp/id/authn/LoginStart');
-
-        $driver->findElement(WebDriverBy::id('uname'))->sendKeys($gooid_user);
-        $element = $driver->findElement(WebDriverBy::id('pass'));
-        $element = $element->sendKeys($gooid_pass);
-        $element->submit();
+        Util::loginToGoo($driver, $gooid_user, $gooid_pass);
 
         $driver->get("http://{$basic_user}:{$basic_pass}@{$domain}/question");
 
-        $driver->findElement(WebDriverBy::id('title_area'))->sendKeys($title);
-        $driver->findElement(WebDriverBy::id('text_area'))->sendKeys($description);
+        $driver->findElement(\WebDriverBy::id('title_area'))->sendKeys($title);
+        $driver->findElement(\WebDriverBy::id('text_area'))->sendKeys($description);
 
-        $driver->findElement(WebDriverBy::cssSelector('#question_confirm_btn > a > span.q-text'))->click();
-        $driver->switchTo()->alert()->accept();
+        $driver->findElement(\WebDriverBy::cssSelector('#question_confirm_btn > a > span.q-text'))->click();
+
+        Util::skipPageLenvingAlert($driver);
 
         $driver->wait(5)->until(
-            WebDriverExpectedCondition::visibilityOfElementLocated(
-                WebDriverBy::cssSelector('#match_categories > input')
+            \WebDriverExpectedCondition::visibilityOfElementLocated(
+                \WebDriverBy::cssSelector('#match_categories > input')
             )
         );
 
-        $driver->findElement(WebDriverBy::cssSelector('#question_complete_button > a'))->click();
+        $driver->findElement(\WebDriverBy::cssSelector('#question_complete_button > a'))->click();
 
-        $driver->findElement(WebDriverBy::cssSelector('li.tooSeeBtn > a'))->click();
+        $driver->findElement(\WebDriverBy::cssSelector('li.tooSeeBtn > a'))->click();
 
         $actual_title = $driver->getTitle();
         $url = $driver->getCurrentUrl();
