@@ -8,6 +8,7 @@ class Util
         return \RemoteWebDriver::create(
             'http://localhost:4444/wd/hub',
             \DesiredCapabilities::firefox()
+//            \DesiredCapabilities::chrome()
 //            \DesiredCapabilities::htmlunit()
         );
     }
