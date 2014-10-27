@@ -7,5 +7,5 @@ Selenium Webdriverを使ったテストのサンプル。
 ```
 $ cd trial-selenium-webdriver
 $ bin/start-selenium.sh
-$ ./vendor/bin/phpunit --bootstrap ./tests/bootstrap.php ./tests/samples/LocalFileTest.php
+$ ./vendor/bin/phpunit --bootstrap ./tests/bootstrap.php ./tests/oshietegoo/PostQuestionFromQuestionPageTest.php
 ```
